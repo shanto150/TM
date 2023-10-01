@@ -11,7 +11,7 @@ function districts()
     //     $optiontext .= '<option '.$selected.' value="'.$val->code.'"> '.$val->name.' </option>';
     // }
 
-    // return $optiontext;
+    // return $optiontext;xx
     return response()->json(['districts' => $districts]);
 }
 
