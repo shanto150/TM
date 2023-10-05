@@ -67,20 +67,15 @@ class FeedbackController extends Controller
     public function Get_feedback_Data()
     {
 
-        // $data = DB::select("select f.id,DATE_FORMAT(f_date,'%d-%b-%Y') fdate,f_type,concat(p.name,' - ',channel) partyandchennel,concat(discount_value,' ',offer_category) offers ,
-        // if(ISNULL(airline_id),'-',p.name) airline_name  ,if(ISNULL(additional_discount),'-',additional_discount) additional_discount ,
-        // if (Validity_type='Days',concat(days,' Days'),concat(DATE_FORMAT(from_date,'%d-%b-%Y'),'~',DATE_FORMAT(to_date,'%d-%b-%Y'))) duration,
-        // if(ISNULL(area_type),'-',f_location(area_type ,area_id)) place,party_id,offer_category,airline_id,channel,discount_value,area_type,area_id,Validity_type,days
-        // from feedback f left join parties p on f.party_id =p.id ORDER BY f.id DESC");
-
         $data = DB::table('feedback AS f')
             ->leftjoin('parties AS p', 'f.party_id', '=', 'p.id')
             ->selectRaw("f.id,DATE_FORMAT(f_date,'%d-%b-%Y') fdate,f_type,concat(p.name,' - ',channel) partyandchennel,concat(discount_value,' ',offer_category) offers ,
-            if(ISNULL(airline_id),'-',p.name) airline_name  ,if(ISNULL(additional_discount),'-',additional_discount) additional_discount ,
-            if (Validity_type='Days',concat(days,' Days'),concat(DATE_FORMAT(from_date,'%d-%b-%Y'),'~',DATE_FORMAT(to_date,'%d-%b-%Y'))) duration,
-            if(ISNULL(area_type),'-',f_location(area_type ,area_id)) place,party_id,offer_category,airline_id,channel,discount_value,area_type,area_id,Validity_type,days")
+            if(ISNULL(airline_id),'',p.name) airline_name  ,if(ISNULL(additional_discount),'',additional_discount) additional_discount ,
+            if (Validity_type='Days',if(ISNULL(concat(days,' Days')),'',concat(days,' Days')),concat(DATE_FORMAT(from_date,'%d-%b-%Y'),'~',DATE_FORMAT(to_date,'%d-%b-%Y'))) duration,
+            if(ISNULL(area_type),'',f_location(area_type ,area_id)) place,party_id,offer_category,airline_id,channel,discount_value,area_type,area_id,Validity_type,days")
             ->orderByDesc('f.id')
             ->get();
+
 
         return Datatables::of($data)
             ->addIndexColumn()

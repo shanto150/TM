@@ -111,8 +111,14 @@
                                                 name="channel">
                                                 <option selected value="None">None</option>
                                                 <option value="Direct API">Direct API</option>
-                                                <option value="GDS">GDS</option>
-                                                <option value="Both">Both</option>
+                                                <option value="ALL GDS">ALL GDS</option>
+                                                <option value="Website">Website</option>
+                                                <option value="Amadeus">Amadeus</option>
+                                                <option value="Galileo">Galileo</option>
+                                                <option value="Sabre">Sabre</option>
+                                                <option value="Apollo">Apollo</option>
+                                                <option value="Worldspan">Worldspan</option>
+                                                <option value="Abacus">Abacus</option>
                                             </select>
                                             <label for="channel">Channel</label>
                                         </div>
@@ -545,7 +551,7 @@
 
 
             if (Validity_type == 'Days') {
-                $('#days').val(days);
+                $('#days').val(days.replace('null',''));
                 $('#day_id').removeClass('d-none');
                 $('#range_id').addClass('d-none');
                 $('#daterangea').val("");
