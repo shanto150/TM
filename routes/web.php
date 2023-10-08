@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\feedback\FeedbackController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartyController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Tasks\TaskController;
+use App\Http\Controllers\feedback\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
+});
+
+Route::get('/lout', [HomeController::class, 'lout'])->name('lout');
+
+Route::get('/clearcache', function () {
+    Artisan::call('optimize:clear');
+
+    return 'Application cache has been cleared';
+});
+
+Route::get('/configcache', function () {
+    Artisan::call('config:cache');
+
+    return 'Application cache configed';
+});
+
+Route::get('/routecache', function () {
+    Artisan::call('route:cache');
+
+    return 'Application route configed';
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -38,5 +60,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/feedback_store', [FeedbackController::class, 'store'])->name('feedback_store');
     Route::get('/feedback_ddc', [FeedbackController::class, 'getDivisionDistrictCity'])->name('feedback_ddc');
     Route::get('/feedback_get', [FeedbackController::class, 'Get_feedback_Data'])->name('feedback_get');
+
+    //Tasks
+    Route::get('/tasks_index', [TaskController::class, 'index'])->name('tasks_index');
 
 });

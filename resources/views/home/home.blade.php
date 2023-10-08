@@ -29,7 +29,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css">
 
     <link rel="stylesheet" href="{{ asset('/resources/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/resources/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('/resources/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
 
     <!-- Animation $ Icons -->
@@ -40,6 +41,8 @@
 
     {{-- floating levels --}}
     <link rel="stylesheet" href="{{ asset('/resources/css/floating-labels.css') }}">
+    {{-- divider --}}
+    <link rel="stylesheet" href="{{ asset('/resources/css/divider.css') }}">
 
 
     <link
@@ -55,6 +58,10 @@
             src: url("{{ asset('/fonts/poppins/Poppins-ExtraBold.ttf') }}");
         }
 
+        option {
+            zoom: 1.2
+        }
+
         .sh1 {
             display: inline-block;
             margin: 0;
@@ -68,7 +75,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .select2-selection {
+        .select2-selection--single {
             height: 36px !important;
             border-color: #ced4da !important;
         }
@@ -81,6 +88,11 @@
             width: 20px;
         }
 
+        .select2 {
+            width: 100% !important;
+            padding: 0;
+        }
+
         .circle-icon {
             width: 25px;
             height: 25px;
@@ -88,7 +100,7 @@
             line-height: 21px;
             text-align: center;
             vertical-align: middle;
-            padding: 0;
+            padding: 1px 1px 0px 0px;
             border-radius: 50%;
         }
 
