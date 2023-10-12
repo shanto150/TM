@@ -42,6 +42,12 @@ Route::get('/routecache', function () {
     return 'Application route configed';
 });
 
+Route::get('/migrate', function () {
+    Artisan::call('route:migrate');
+
+    return 'Migrated';
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/verification', [HomeController::class, 'indexUserVerification'])->name('index.verify');
