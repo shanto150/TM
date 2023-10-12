@@ -43,7 +43,7 @@ Route::get('/routecache', function () {
 });
 
 Route::get('/migrate', function () {
-    Artisan::call('route:migrate');
+    Artisan::call('migrate');
 
     return 'Migrated';
 });
