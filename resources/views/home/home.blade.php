@@ -43,6 +43,9 @@
     <link rel="stylesheet" href="{{ asset('/resources/css/floating-labels.css') }}">
     {{-- divider --}}
     <link rel="stylesheet" href="{{ asset('/resources/css/divider.css') }}">
+    {{-- Clock --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dmuy/MDTimePicker@v1.0.2-rc2/mdtimepicker.min.css">
+
 
 
     <link
@@ -165,6 +168,9 @@
 
     {{-- datepicker --}}
     <script src="{{ asset('/resources/plugins/daterangepicker/daterangepicker.js') }}"></script>
+
+    {{-- Clock --}}
+    <script src="https://cdn.jsdelivr.net/gh/dmuy/MDTimePicker@v1.0.2-rc2/mdtimepicker.min.js"></script>
 
     <script src="{{ asset('/resources/plugins/select2/js/select2.full.min.js') }}"></script>
 

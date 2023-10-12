@@ -50,15 +50,15 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <div class="form-label-group in-border">
-                                                    <select class="form-control" form="myform" id="f_type"
-                                                        name="f_type">
+                                                    <select class="form-control" form="myform" id="task_type"
+                                                        name="task_type">
                                                         <option selected value="">Choose...</option>
                                                         <option value="Sales Call">Sales Call</option>
                                                         <option value="Meeting">Meeting</option>
                                                         <option value="Phone Call">Phone Call</option>
                                                         <option value="Follow up">Follow up</option>
                                                     </select>
-                                                    <label for="f_type">Task Type</label>
+                                                    <label for="task_type">Task Type</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -73,7 +73,7 @@
                                                         <option value="Medium">Medium</option>
                                                         <option value="Low">Low</option>
                                                     </select>
-                                                    <label for="priority">priority</label>
+                                                    <label for="priority">Priority</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -84,25 +84,30 @@
 
                                         <div class="col-md-3">
                                             <div class="form-label-group in-border">
-                                                <input type="text" id="f_date" form="myform" name="f_date"
+                                                <input type="text" id="task_date" form="myform" name="task_date"
                                                     class="form-control daterange" autocomplete="off">
-                                                <label for="f_date">Task Date</label>
+                                                <label for="task_date">Task Date</label>
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
+
                                             <div class="form-label-group in-border">
-                                                <input type="time" id="start_time" form="myform" name="start_time"
-                                                    class="form-control daterange" autocomplete="off">
+                                                <input type="time" id="start_time"
+                                                    onchange="getTimeDiff($('#start_time').val(),$('#end_time').val())"
+                                                    form="myform" name="start_time" class="form-control"
+                                                    autocomplete="off">
                                                 <label for="start_time">Start Time</label>
                                             </div>
+
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-label-group in-border">
-                                                <input type="time" id="f_date" form="myform" name="f_date"
-                                                    class="form-control daterange" autocomplete="off">
-                                                <label for="f_date">End Time</label>
+                                                <input type="time" id="end_time"
+                                                    onchange="getTimeDiff($('#start_time').val(),$('#end_time').val())"
+                                                    form="myform" name="end_time" class="form-control" autocomplete="off">
+                                                <label for="end_time">End Time</label>
                                             </div>
                                         </div>
 
@@ -119,10 +124,18 @@
                                     <div class="row m-0">
 
                                         <div class="col-md-3">
-                                            <div class="form-label-group in-border">
-                                                <input type="text" id="zone" form="myform" name="zone"
-                                                    class="form-control" autocomplete="off">
-                                                <label for="zone">Zone</label>
+                                            <div class="form-group">
+                                                <div class="form-label-group in-border">
+                                                    <select class="form-control" form="myform" id="zone"
+                                                        name="zone">
+                                                        <option selected value="">Choose...</option>
+                                                        <option value="Left">Left</option>
+                                                        <option value="Right">Right</option>
+                                                        <option value="Middle">Middle</option>
+                                                        <option value="Top">Top</option>
+                                                    </select>
+                                                    <label for="Zone">Zone</label>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -190,15 +203,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <div class="form-label-group in-border">
-                                                    <select class="select2" form="myform" id="Assgin_to"
-                                                        name="Assgin_to">
+                                                    <select class="select2" form="myform" id="assign_to"
+                                                        name="assign_to">
                                                         <option selected value="">Choose...</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->id }}">{{ $user->name }} -
                                                                 {{ $user->designation }}</option>
                                                         @endforeach
                                                     </select>
-                                                    <label for="Assgin_to">Assign To</label>
+                                                    <label for="assign_to">Assign To</label>
                                                 </div>
                                             </div>
 
@@ -213,13 +226,14 @@
 
                                             <div class="form-groups">
                                                 <div class="form-label-group in-border">
-                                                <select class="select2 custom-select" multiple="multiple"
-                                                    data-placeholder="Select a State">
+                                                    <select class="select2 custom-select" id="user_id" name="user_id[]"
+                                                        multiple="multiple" data-placeholder="Select a State">
                                                         @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                            <option value="{{ $user->id }}">{{ $user->name }}
+                                                            </option>
                                                         @endforeach
-                                                </select>
-                                                <label for="Assgin_to">+ Group People</label>
+                                                    </select>
+                                                    <label for="user_id">+ Group People</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -277,10 +291,13 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Party-Channel</th>
-                                    <th>Airlines-Extra Discount</th>
-                                    <th>Duration-Place</th>
-                                    <th>Actions</th>
+                                    <th>Priority</th>
+                                    <th>Party Category</th>
+                                    <th>Time Duration</th>
+                                    <th>Assign To</th>
+                                    <th>Zone Area</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -299,41 +316,33 @@
 @endsection
 @push('script')
     <script type="text/javascript">
-
         $(document).ready(function() {
             $('.select2').select2();
         });
 
+        function getTimeDiff(StartTime, EndTime) {
+            if (StartTime && EndTime) {
+                const startTime = moment($('#start_time').val(), "HH:mm");
+                const EndTime = moment($('#end_time').val(), "HH:mm");
+                if (EndTime.diff(startTime, 'minutes') < 0) {
+                    message('Wrong Time Selected !', '#FECC43', '#1A389F', 'info', 'Info');
+                    $('#duration').val('');
+                    $('#end_time').val('');
+                } else {
+                    $('#duration').val(EndTime.diff(startTime, 'minutes'));
+                }
+            }
+
+        }
+
+
         var firstValue = $("#myform").serialize();
         $('#spinShowHide').hide();
         $('#modelSpinner').hide();
-        var rValues = 'Days';
 
         var vdistrict = '';
         var vcity = '';
         var district_val = '';
-
-        $('#rangeButton').on('click', function() {
-            $('input[id="daterangea"]').trigger('click');
-
-        });
-
-        function RadioChange(rValue) {
-
-            if (rValue == 'Days') {
-                $('#days').val('');
-                $('#day_id').removeClass('d-none');
-                $('#range_id').addClass('d-none');
-                $('#daterangea').val("");
-                rValues = 'Days'
-            } else {
-                $('#days').val('');
-                $('#range_id').removeClass('d-none');
-                $('#day_id').addClass('d-none');
-                $('#daterangea').val("");
-                rValues = 'Range'
-            }
-        }
 
         // create Datatable
         var table = $('#EntryTable').DataTable({
@@ -345,39 +354,50 @@
                 "targets": "_all",
                 "orderable": false
             }],
-            ajax: "{{ route('feedback_get') }}",
+            ajax: "{{ route('task_get') }}",
             columns: [{
                     render: function(data, type, row) {
-                        var fdate = row.fdate;
-                        var f_type = row.f_type;
+                        var task_date = row.task_date;
+                        var task_type = row.task_type;
                         var html = '';
                         html += '<div class="d-flex flex-column">';
-                        html += '<div>' + fdate + '</div>';
-                        html += '<div style="color: blue;font-size: 14px;">' + f_type + '</div>';
+                        html += '<div>' + task_date + '</div>';
+                        html += '<div style="color: blue;font-size: 14px;">' + task_type + '</div>';
                         html += '</div>';
                         return html;
                     }
                 },
                 {
                     render: function(data, type, row) {
-                        var partyandchennel = row.partyandchennel;
-                        var offers = row.offers;
+                        var priority = row.priority;
                         var html = '';
                         html += '<div class="d-flex flex-column">';
-                        html += '<div>' + partyandchennel + '</div>';
-                        html += '<div style="color: blue;font-size: 14px;">' + offers + '</div>';
+                        html += '<div>' + priority + '</div>';
+                        html += '<div style="color: blue;font-size: 14px;"></div>';
                         html += '</div>';
                         return html;
                     }
                 },
                 {
                     render: function(data, type, row) {
-                        var airline_name = row.airline_name;
-                        var additional_discount = row.additional_discount;
+                        var name = row.name;
+                        var type_category = row.type_category;
                         var html = '';
                         html += '<div class="d-flex flex-column">';
-                        html += '<div>' + airline_name + '</div>';
-                        html += '<div style="color: blue;font-size: 14px;">' + additional_discount +
+                        html += '<div>' + name + '</div>';
+                        html += '<div style="color: blue;font-size: 14px;">' + type_category + '</div>';
+                        html += '</div>';
+                        return html;
+                    }
+                },
+                {
+                    render: function(data, type, row) {
+                        var st_et = row.st_et;
+                        var duration = row.duration;
+                        var html = '';
+                        html += '<div class="d-flex flex-column">';
+                        html += '<div>' + st_et + '</div>';
+                        html += '<div style="color: blue;font-size: 14px;">' + duration +
                             '</div>';
                         html += '</div>';
                         return html;
@@ -385,39 +405,62 @@
                 },
                 {
                     render: function(data, type, row) {
-                        var duration = row.duration;
-                        var place = row.place;
+                        var assign_to = row.assign_to;
                         var html = '';
                         html += '<div class="d-flex flex-column">';
-                        html += '<div>' + duration + '</div>';
-                        html += '<div style="color: blue;font-size: 14px;">' + place + '</div>';
+                        html += '<div>' + assign_to + '</div>';
+                        html += '<div style="color: blue;font-size: 14px;"></div>';
                         html += '</div>';
                         return html;
                     }
                 },
                 {
                     render: function(data, type, row) {
-                        var fdate = "'" + row.fdate + "'";
-                        var f_type = "'" + row.f_type + "'";
+                        var zone = row.zone;
+                        var area = row.area;
+                        var html = '';
+                        html += '<div class="d-flex flex-column">';
+                        html += '<div>' + zone + '</div>';
+                        html += '<div style="color: blue;font-size: 14px;">' + area +
+                            '</div>';
+                        html += '</div>';
+                        return html;
+                    }
+                },
+                {
+                    render: function(data, type, row) {
+                        var status = row.status;
+                        var html = '';
+                        html += '<div class="d-flex flex-column">';
+                        html += '<div>' + status + '</div>';
+                        html += '<div style="color: blue;font-size: 14px;"></div>';
+                        html += '</div>';
+                        return html;
+                    }
+                },
+                {
+                    render: function(data, type, row) {
                         var party_id = "'" + row.party_id + "'";
-                        var offer_category = "'" + row.offer_category + "'";
-                        var airline_id = "'" + row.airline_id + "'";
-                        var channel = "'" + row.channel + "'";
-                        var discount_value = "'" + row.discount_value + "'";
-                        var additional_discount = "'" + row.additional_discount + "'";
+                        var task_type = "'" + row.task_type + "'";
+                        var task_date = "'" + row.task_date + "'";
+                        var start_time = "'" + row.start_time + "'";
+                        var end_time = "'" + row.end_time + "'";
+                        var duration = "'" + row.duration1 + "'";
+                        var priority = "'" + row.priority + "'";
+                        var assign_to = "'" + row.assign_to1 + "'";
                         var area_type = "'" + row.area_type + "'";
                         var area_id = "'" + row.area_id + "'";
-                        var Validity_type = "'" + row.Validity_type + "'";
-                        var days = "'" + row.days + "'";
-                        var duration = "'" + row.duration + "'";
+                        var zone = "'" + row.zone + "'";
                         var rowID = "'" + row.id + "'";
+                        var title = "'" + row.title + "'";
+                        var note = "'" + row.note + "'";
                         var html = '';
                         html += '<div class="d-flex justify-content-center">';
-                        html += '<button type="button" onclick="edit_model(' + fdate + ',' + f_type + ',' +
-                            party_id + ',' + offer_category + ',' + airline_id + ',' + channel + ',' +
-                            discount_value + ',' + additional_discount + ',' + area_type + ',' + area_id +
-                            ',' + Validity_type + ',' + days +
-                            ',' + duration + ',' + rowID +
+                        html += '<button type="button" onclick="edit_model(' + party_id + ',' + task_type +
+                            ',' +
+                            task_date + ',' + start_time + ',' + end_time + ',' + duration + ',' +
+                            priority + ',' + assign_to + ',' + area_type + ',' + area_id + ',' + zone +
+                            ',' + title + ',' + note + ',' + rowID +
                             ')" class="btn btn-sm btn-outline-primary mr-1"><i class="fa fa-pen"></i></button>';
                         html +=
                             '<button type="button" class="btn btn-sm btn-outline-danger" ><i class="fa fa-trash"></i></button>';
@@ -458,7 +501,7 @@
                 success: function(data) {
                     ctn = data.data.length;
 
-                    console.log(ctn);
+                    // console.log(ctn);
                     if (ctn > 0) {
                         // $('#area_id').val(null).change();
                         $("#area_id").empty();
@@ -476,7 +519,7 @@
 
         //form validation and message
         function FromsCheck() {
-            var x = ['f_date', 'f_type'];
+            var x = ['task_date', 'task_date'];
             if (EmptyValueFocus(x)) {
                 save();
             }
@@ -487,16 +530,8 @@
 
             var allInputs = $("#myform").serialize();
             var formData = new FormData(myform);
-
-            formData.append('f_date', moment($('#f_date').val()).format("YYYY-MM-DD"));
-
-            if (rValues == "Range") {
-                let fullRange = $('#daterangea').val();
-                const dr = fullRange.split("~");
-                formData.append('from_date', moment(dr[0]).format("YYYY-MM-DD"));
-                formData.append('to_date', moment(dr[1]).format("YYYY-MM-DD"));
-            }
-
+            var newDt = moment($('#task_date').val(), "DD-MMM-YYYY")
+            formData.append('task_date', moment(newDt).format("YYYY-MM-DD"));
 
             if (firstValue == allInputs) {
                 message('Nothing changed !', '#FECC43', '#1A389F', 'info', 'Info');
@@ -523,7 +558,7 @@
                         $('#modelSpinner').hide();
                     },
                     type: 'POST',
-                    url: "{{ route('feedback_store') }}",
+                    url: "{{ route('task_store') }}",
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -533,11 +568,10 @@
                             message(res.messege, '#FF0000', 'white', 'error', 'error');
                         } else {
                             message(res.messege, '#29912b', 'white', 'error', 'Success');
-                            $('#party_type').val(null).change();
-                            $('#category').val(null).change();
-                            $('#division').val(null).change();
-                            $('#district').val(null).change();
-                            $('#city').val(null).change();
+                            $('#party_id').val(null).change();
+                            $('#assign_to').val(null).change();
+                            $('#area_id').val(null).change();
+                            $('#user_id').val(null).change();
                             document.getElementById('myform').reset();
                             $("#myModal").modal('hide');
                             $('#EntryTable').DataTable().ajax.reload();
@@ -549,40 +583,26 @@
         }
 
         //Edit model
-        function edit_model(fdate, f_type, party_id, offer_category, airline_id, channel, discount_value,
-            additional_discount, area_type, area_id, Validity_type, days, duration, rowID) {
+        function edit_model(party_id, task_type, task_date, start_time, end_time, duration, priority,
+            assign_to, area_type, area_id, zone, title, note, rowID) {
 
+
+            getGroupPeople(rowID);
             // console.log(fdate);
-            var keysArray = ['discount_value', 'additional_discount', 'id'];
-            var valuesArray = [discount_value, additional_discount, rowID];
+            var keysArray = ['duration', 'title', 'note', 'id'];
+            var valuesArray = [duration, title, note, rowID];
 
             editValuePst(keysArray, valuesArray);
-            $('#f_date').val(fdate);
-            $('#f_type').val(f_type).change();
+
+            $('#start_time').val(start_time);
+            $('#end_time').val(end_time);
+            $('#zone').val(zone);
+            $('#task_date').val(task_date);
             $('#party_id').val(party_id).change();
-            $('#party_id').val(party_id).change();
-            $('#offer_category').val(offer_category).change();
-            $('#airline_id').val(airline_id).change();
-            $('#channel').val(channel).change();
+            $('#priority').val(priority).change();
+            $('#assign_to').val(assign_to).change();
+            $('#task_type').val(task_type).change();
             $('#area_type').val(area_type).change();
-
-
-            if (Validity_type == 'Days') {
-                $('#days').val(days.replace('null', ''));
-                $('#day_id').removeClass('d-none');
-                $('#range_id').addClass('d-none');
-                $('#daterangea').val("");
-                $("#radioPrimary1").prop('checked', true);
-
-                rValues = 'Days'
-            } else {
-                $('#days').val('');
-                $('#range_id').removeClass('d-none');
-                $('#day_id').addClass('d-none');
-                $('#daterangea').val(duration);
-                $('#radioPrimary2').prop('checked', true);
-                rValues = 'Range'
-            }
 
             setTimeout(
                 function() {
@@ -594,58 +614,61 @@
             firstValue = $("#myform").serialize();
         }
 
+        //getGroupPeople
+        function getGroupPeople(rTaskID) {
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('getGroup') }}", // Route
+                data: {
+                    'rTaskID': rTaskID
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $("#modelSpinner").addClass("spinner");
+                    $('#modelSpinner').show();
+                },
+                error: function(res) {
+                    $("#modelSpinner").removeClass("spinner");
+                    $('#modelSpinner').hide();
+                },
+                complete: function() {
+                    $("#modelSpinner").removeClass("spinner");
+                    $('#modelSpinner').hide();
+                },
+                success: function(data) {
+                    ctn = data.data.length;
+                    var GParray = new Array();
+                    if (ctn > 0) {
+                        $.each(data.data, function(key, value) {
+                            GParray.push(value.user_id.toString());
+                        });
+                    }
+                    $('#user_id').val(GParray).change();
+
+                }
+            });
+        }
+
         function Close() {
-            $('#party_type').val(null).change();
-            $('#category').val(null).change();
-            $('#division').val(null).change();
-            $('#district').val(null).change();
-            $('#f_type').val(null).change();
-            $('#city').val(null).change();
-            $('#airline_id').val(null).change();
-            $('#days').val('');
-            $('#day_id').removeClass('d-none');
-            $('#range_id').addClass('d-none');
-            $('#daterangea').val("");
-            rValues = 'Days'
+            $('#party_id').val(null).change();
+            $('#assign_to').val(null).change();
+            $('#area_id').val(null).change();
+            $('#user_id').val(null).change();
             document.getElementById('myform').reset();
             $("#myModal").modal('hide');
         }
 
         function Clean() {
-            $('#party_type').val(null).change();
-            $('#category').val(null).change();
-            $('#division').val(null).change();
-            $('#district').val(null).change();
-            $('#f_type').val(null).change();
-            $('#city').val(null).change();
-            $('#airline_id').val(null).change();
-            $('#days').val('');
-            $('#day_id').removeClass('d-none');
-            $('#range_id').addClass('d-none');
-            $('#daterangea').val("");
-            rValues = 'Days'
+            $('#party_id').val(null).change();
+            $('#assign_to').val(null).change();
+            $('#area_id').val(null).change();
+            $('#user_id').val(null).change();
             document.getElementById('myform').reset();
         }
 
-        //Date range picker
-        $('#daterangea').daterangepicker({
-            autoApply: true,
-            showDropdowns: true,
-            "locale": {
-                "format": "DD-MMM-YYYY",
-            }
-        });
 
-
-        $('#daterangea').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD-MMM-YYYY') + '~' + picker.endDate.format('DD-MMM-YYYY'));
-        });
-
-        $('#daterangea').on('hide.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD-MMM-YYYY') + '~' + picker.endDate.format('DD-MMM-YYYY'));
-        });
-
-        $('#f_date').daterangepicker({
+        $('#task_date').daterangepicker({
             singleDatePicker: true,
             autoApply: true,
             showDropdowns: true,

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('party_name');
-            $table->string('party_type');
+            $table->integer('party_id');
+            $table->string('task_type')->nullable();
             $table->date('task_date');
-            $table->dateTime('start_time')->nullable();
-            $table->dateTime('end_time')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
             $table->integer('duration')->nullable()->comment('Minutes');
             $table->string('priority', 50)->nullable()->comment('High','Low','Medium');
             $table->integer('assign_to');

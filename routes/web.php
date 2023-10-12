@@ -63,5 +63,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Tasks
     Route::get('/tasks_index', [TaskController::class, 'index'])->name('tasks_index');
+    Route::post('/task_store', [TaskController::class, 'store'])->name('task_store');
+    Route::get('/task_get', [TaskController::class, 'Get_tasks_Data'])->name('task_get');
+    Route::get('/getGroup', [TaskController::class, 'getGroupPeople'])->name('getGroup');
 
 });
