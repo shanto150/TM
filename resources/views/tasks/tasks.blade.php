@@ -302,7 +302,7 @@
 
                                         </div>
 
-                                        <div class="col-md-12 mt-2">
+                                        <div class="col-md-12 mt-5">
 
                                             <div class="form-groups">
                                                 <div class="form-label-group in-border">
@@ -319,7 +319,7 @@
                                         </div>
 
                                     </div>
-
+test
                                 </div>
 
                                 <input type="text" name="id" id="id" form="myform" value="0"
