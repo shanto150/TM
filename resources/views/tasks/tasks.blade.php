@@ -1,5 +1,85 @@
 @extends('home.home')
 
+<style>
+    .wrapper {
+        padding-bottom: 10px;
+    }
+
+    .divider {
+        position: relative;
+        margin-top: 10px;
+        height: 1px;
+    }
+
+    .div-transparent:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 5%;
+        right: 5%;
+        width: 90%;
+        height: 1px;
+        background-image: linear-gradient(to right, transparent, rgb(48, 49, 51), transparent);
+    }
+
+    .div-arrow-down:after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: -7px;
+        left: calc(50% - 7px);
+        width: 14px;
+        height: 14px;
+        transform: rotate(45deg);
+        background-color: white;
+        border-bottom: 1px solid rgb(48, 49, 51);
+        border-right: 1px solid rgb(48, 49, 51);
+    }
+
+    .div-tab-down:after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: calc(50% - 10px);
+        width: 20px;
+        height: 14px;
+        background-color: white;
+        border-bottom: 1px solid rgb(48, 49, 51);
+        border-left: 1px solid rgb(48, 49, 51);
+        border-right: 1px solid rgb(48, 49, 51);
+        border-radius: 0 0 8px 8px;
+    }
+
+    .div-stopper:after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: -6px;
+        left: calc(50% - 7px);
+        width: 14px;
+        height: 12px;
+        background-color: white;
+        border-left: 1px solid rgb(48, 49, 51);
+        border-right: 1px solid rgb(48, 49, 51);
+    }
+
+    .div-dot:after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: -9px;
+        left: calc(50% - 9px);
+        width: 18px;
+        height: 18px;
+        background-color: goldenrod;
+        border: 1px solid rgb(48, 49, 51);
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 2px white,
+            0 0 0 4px white;
+    }
+</style>
+
 @section('content')
     <div class="container-fluid">
 
@@ -222,7 +302,7 @@
 
                                         </div>
 
-                                        <div class="col-md-12 mt-1">
+                                        <div class="col-md-12 mt-3">
 
                                             <div class="form-groups">
                                                 <div class="form-label-group in-border">

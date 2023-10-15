@@ -42,8 +42,7 @@
 
     {{-- floating levels --}}
     <link rel="stylesheet" href="{{ asset('/resources/css/floating-labels.css') }}">
-    {{-- divider --}}
-    <link rel="stylesheet" href="{{ asset('/resources/css/divider.css') }}">
+
     {{-- Clock --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dmuy/MDTimePicker@v1.0.2-rc2/mdtimepicker.min.css">
 
