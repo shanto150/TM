@@ -302,7 +302,7 @@
 
                                         </div>
 
-                                        <div class="col-md-12 mt-3">
+                                        <div class="col-md-12 mt-2">
 
                                             <div class="form-groups">
                                                 <div class="form-label-group in-border">
