@@ -31,7 +31,6 @@ class TaskController extends Controller
         if ($Party->exists()) {
             Task::where('id', $rowId)->update(
                 ['party_id' => $request->party_id, 'task_type' => $request->task_type, 'task_date' => $request->task_date, 'start_time' => $request->start_time, 'end_time' => $request->end_time, 'duration' => $request->duration, 'priority' => $request->priority, 'assign_to' => $request->assign_to, 'zone' => $request->zone, 'area_type' => $request->area_type, 'area_id' => $request->area_id, 'title' => $request->title, 'note' => $request->note]);
-
                 Task_group::where('task_id',  $rowId)->delete();
                 foreach($request->user_id as $user_id){
                     $Task_group                = new Task_group;
@@ -39,7 +38,6 @@ class TaskController extends Controller
                     $Task_group->user_id  =  $user_id;
                     $Task_group->save();
                 }
-
                 $notify = ['messege' => 'Successfully Updated', 'alert-type' => 's'];
 
             return redirect()->back()->with($notify);
@@ -86,6 +84,20 @@ class TaskController extends Controller
         ->where('task_id',$rTaskID)
         ->get();
         return response()->json($data);
+    }
+
+    public function TaskStatusUpdate(Request $request)
+    {
+        // dd($request->all());
+        $rTaskID = $request->rTaskID;
+
+        Task::where('id', $rTaskID)->update(
+        ['note' => $request->snote,'status' => $request->status]);
+
+        $notify = ['messege' => 'Successfully Updated', 'alert-type' => 's'];
+
+        return redirect()->back()->with($notify);
+
     }
 
 }

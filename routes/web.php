@@ -72,5 +72,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/task_store', [TaskController::class, 'store'])->name('task_store');
     Route::get('/task_get', [TaskController::class, 'Get_tasks_Data'])->name('task_get');
     Route::get('/getGroup', [TaskController::class, 'getGroupPeople'])->name('getGroup');
+    Route::post('/TaskStatusUpdate', [TaskController::class, 'TaskStatusUpdate'])->name('TaskStatusUpdate');
 
 });

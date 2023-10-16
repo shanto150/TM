@@ -99,11 +99,13 @@
             text-align: center;
             vertical-align: middle;
             padding: 1px 1px 0px 0px;
+            margin-top: 3px;
             border-radius: 50%;
         }
 
         .circle-icon i {
             color: #0069D9;
+            margin-top: 3px;
             text-shadow: 1px 1px 1px #011122;
             font-size: 14px;
         }

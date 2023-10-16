@@ -302,7 +302,7 @@
 
                                         </div>
 
-                                        <div class="col-md-12 mt-5">
+                                        <div class="col-md-12 mt-2">
 
                                             <div class="form-groups">
                                                 <div class="form-label-group in-border">
@@ -319,7 +319,7 @@
                                         </div>
 
                                     </div>
-test
+
                                 </div>
 
                                 <input type="text" name="id" id="id" form="myform" value="0"
@@ -347,6 +347,80 @@ test
         </div>
         {{-- End modal --}}
 
+        {{-- modal --}}
+        <div class="modal zoomer" id="statusModel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form id="statusForm">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                <span class="btn circle-icon">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                                Status Update
+                            </h5>
+
+                            <img src="{{ URL::asset('resources/images/appimages/spin.png') }}" alt="profile Pic"
+                                height="30" width="30" id="modelSpinner2" />
+
+                        </div>
+
+                        <div class="modal-body">
+
+                                <div class="row justify-content-center mb-3 ml-2 mr-2 p-2 mt-3">
+
+                                    <div class="icheck-success d-inline text-info ">
+                                        <input type="radio" form="statusForm" name="status" value="Planned" checked id="Planned">
+                                        <label for="Planned">Planned</label>
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <div class="icheck-success d-inline text-warning">
+                                        <input type="radio" form="statusForm" name="status" value="In Progress" id="In_Progress">
+                                        <label for="In_Progress">In Progress</label>
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <div class="icheck-success d-inline text-success">
+                                        <input type="radio" form="statusForm" name="status" value="Done" id="Done">
+                                        <label for="Done">Done</label>
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <div class="icheck-success d-inline text-danger">
+                                        <input type="radio" form="statusForm" name="status" value="Cancelled" id="Cancelled">
+                                        <label for="Cancelled">Cancelled</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-label-group in-border">
+                                    <textarea id="snote" name="snote" form="statusForm" style="text-transform:capitalize"
+                                    class="form-control text-center"
+                                        cols="60" rows="2"></textarea>
+                                    <label for="note">Note</label>
+                                </div>
+
+                                <input type="text" id="rTaskID" hidden name="rTaskID">
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger" onclick="Close()"
+                                data-target="#statusModel" data-dismiss="modal"><i class="fa fa-times"
+                                    aria-hidden="true"></i> Close</button>
+
+                            <button type="button" onclick="Clean();" class="btn btn-sm btn-warning me-5"><i
+                                    class="fa fa-eraser" aria-hidden="true"></i>
+                                Clear</button>
+                            <button type="button" onclick="statusUpdate();" class="btn btn-sm btn-success"><i
+                                    class="fa fa-check" aria-hidden="true"></i> Save</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- End modal --}}
+
 
         {{-- list --}}
         <div class="row">
@@ -354,10 +428,10 @@ test
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <span class="btn circle-icon">
+                            <span class="btn circle-icon ">
                                 <i class="fa fa-plane fa-2xs"></i>
                             </span>
-                            Feedback List
+                            Task List
                         </h3>
                         <div class="card-tools">
                             <button type="button" data-toggle="modal" data-target="#myModal"
@@ -510,12 +584,35 @@ test
                 {
                     render: function(data, type, row) {
                         var status = row.status;
-                        var html = '';
-                        html += '<div class="d-flex flex-column">';
-                        html += '<div>' + status + '</div>';
-                        html += '<div style="color: blue;font-size: 14px;"></div>';
-                        html += '</div>';
-                        return html;
+
+                        if (status=='Planned') {
+                            var html = '';
+                            html += '<div class="d-flex flex-column">';
+                            html += '<div class="badge badge-info">' + status + '</div>';
+                            html += '</div>';
+                            return html;
+                        }else if (status=='In Progress')
+                        {
+                            var html = '';
+                            html += '<div class="d-flex flex-column">';
+                            html += '<div class="badge badge-warning">' + status + '</div>';
+                            html += '</div>';
+                            return html;
+                        }else if (status=='Done')
+                        {
+                            var html = '';
+                            html += '<div class="d-flex flex-column">';
+                            html += '<div class="badge badge-success">' + status + '</div>';
+                            html += '</div>';
+                            return html;
+                        }else{
+                            var html = '';
+                            html += '<div class="d-flex flex-column">';
+                            html += '<div class="badge badge-danger">' + status + '</div>';
+                            html += '</div>';
+                            return html;
+                        }
+
                     }
                 },
                 {
@@ -534,8 +631,11 @@ test
                         var rowID = "'" + row.id + "'";
                         var title = "'" + row.title + "'";
                         var note = "'" + row.note + "'";
+                        var status ="'" + row.status + "'";
                         var html = '';
                         html += '<div class="d-flex justify-content-center">';
+                        html +=
+                            '<button type="button" onclick="OpenStatusModel('+rowID+','+status+');" class="btn btn-sm btn-outline-success mr-1" ><i class="fa fa-retweet"></i></button>';
                         html += '<button type="button" onclick="edit_model(' + party_id + ',' + task_type +
                             ',' +
                             task_date + ',' + start_time + ',' + end_time + ',' + duration + ',' +
@@ -662,6 +762,57 @@ test
 
         }
 
+        //statusUpdate
+        function statusUpdate() {
+
+            var allInputs = $("#statusForm").serialize();
+            var formData = new FormData(statusForm);
+
+            if (firstValue == allInputs) {
+                message('Nothing changed !', '#FECC43', '#1A389F', 'info', 'Info');
+            } else {
+                $.ajax({
+                    beforeSend: function() {
+                        $("#modelSpinner").addClass("spinner");
+                        $('#modelSpinner').show();
+                    },
+                    error: function(res) {
+                        $("#modelSpinner").removeClass("spinner");
+                        $('#modelSpinner').hide();
+                        const ErrowArray = res.responseJSON['message'];
+                        const EE = res.responseJSON['exception'];
+                        const msgs = ErrowArray.split(':');
+                        if (EE == 'ErrorException') {
+                            message(ErrowArray, '#FF0000', 'white', 'error', 'Error');
+                        } else {
+                            message(msgs[2], '#FF0000', 'white', 'error', msgs[1]);
+                        }
+                    },
+                    complete: function() {
+                        $("#modelSpinner").removeClass("spinner");
+                        $('#modelSpinner').hide();
+                    },
+                    type: 'POST',
+                    url: "{{ route('TaskStatusUpdate') }}",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function(res) {
+                        if (res.types == 'e') {
+                            message(res.messege, '#FF0000', 'white', 'error', 'error');
+                        } else {
+                            message(res.messege, '#29912b', 'white', 'error', 'Success');
+                            document.getElementById('statusForm').reset();
+                            $("#statusModel").modal('hide');
+                            $('#EntryTable').DataTable().ajax.reload();
+                        }
+                    }
+                });
+            }
+
+        }
+
         //Edit model
         function edit_model(party_id, task_type, task_date, start_time, end_time, duration, priority,
             assign_to, area_type, area_id, zone, title, note, rowID) {
@@ -690,6 +841,7 @@ test
                 }, 1000);
 
             $("#myModal").modal('show');
+
 
             firstValue = $("#myform").serialize();
         }
@@ -745,6 +897,19 @@ test
             $('#area_id').val(null).change();
             $('#user_id').val(null).change();
             document.getElementById('myform').reset();
+        }
+
+        function OpenStatusModel(rID,Status) {
+
+            if (Status=='In Progress') {
+                $("#In_Progress").prop("checked", true);
+            } else {
+                $("#"+Status).prop("checked", true);
+            }
+            $('#rTaskID').val(rID);
+
+            $('#modelSpinner2').hide();
+            $("#statusModel").modal('show');
         }
 
 
