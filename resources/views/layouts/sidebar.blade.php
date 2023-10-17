@@ -4,7 +4,7 @@
         {{-- <img src="{{ asset('') }}resources/images/appimages/spin.png" alt="AdminLTE Logo" id="spn" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light text-center sh1">HOME</span> --}}
         <div style="margin-left: 70px;" class="sh1">
-            HOME
+            TASK
         </div>
     </a>
 
