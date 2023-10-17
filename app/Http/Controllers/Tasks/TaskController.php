@@ -32,12 +32,13 @@ class TaskController extends Controller
             Task::where('id', $rowId)->update(
                 ['party_id' => $request->party_id, 'task_type' => $request->task_type, 'task_date' => $request->task_date, 'start_time' => $request->start_time, 'end_time' => $request->end_time, 'duration' => $request->duration, 'priority' => $request->priority, 'assign_to' => $request->assign_to, 'zone' => $request->zone, 'area_type' => $request->area_type, 'area_id' => $request->area_id, 'title' => $request->title, 'note' => $request->note]);
                 Task_group::where('task_id',  $rowId)->delete();
+                if ($request->user_id) {
                 foreach($request->user_id as $user_id){
                     $Task_group                = new Task_group;
                     $Task_group->task_id    =  $rowId;
                     $Task_group->user_id  =  $user_id;
                     $Task_group->save();
-                }
+                }}
                 $notify = ['messege' => 'Successfully Updated', 'alert-type' => 's'];
 
             return redirect()->back()->with($notify);
@@ -46,12 +47,15 @@ class TaskController extends Controller
             $ifsave=Task::create($request->all());
             if ( $ifsave) {
 
-                foreach($request->user_id as $user_id){
-                    $Task_group                = new Task_group;
-                    $Task_group->task_id    =  $ifsave->id;
-                    $Task_group->user_id  =  $user_id;
-                    $Task_group->save();
+                if ($request->user_id) {
+                    foreach($request->user_id as $user_id){
+                        $Task_group                = new Task_group;
+                        $Task_group->task_id    =  $ifsave->id;
+                        $Task_group->user_id  =  $user_id;
+                        $Task_group->save();
+                    }
                 }
+
             }
             $notify = ['messege' => 'Successfully Saved', 'alert-type' => 's'];
 

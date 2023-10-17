@@ -209,10 +209,9 @@
                                                     <select class="form-control" form="myform" id="zone"
                                                         name="zone">
                                                         <option selected value="">Choose...</option>
-                                                        <option value="Left">Left</option>
-                                                        <option value="Right">Right</option>
-                                                        <option value="Middle">Middle</option>
-                                                        <option value="Top">Top</option>
+                                                        <option value="Dhaka North">Dhaka North</option>
+                                                        <option value="Dhaka South">Dhaka South</option>
+                                                        <option value="Outside Dhaka">Outside Dhaka</option>
                                                     </select>
                                                     <label for="Zone">Zone</label>
                                                 </div>
@@ -368,38 +367,41 @@
 
                         <div class="modal-body">
 
-                                <div class="row justify-content-center mb-3 ml-2 mr-2 p-2 mt-3">
+                            <div class="row justify-content-center mb-3 ml-2 mr-2 p-2 mt-3">
 
-                                    <div class="icheck-success d-inline text-info ">
-                                        <input type="radio" form="statusForm" name="status" value="Planned" checked id="Planned">
-                                        <label for="Planned">Planned</label>
-                                    </div>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <div class="icheck-success d-inline text-warning">
-                                        <input type="radio" form="statusForm" name="status" value="In Progress" id="In_Progress">
-                                        <label for="In_Progress">In Progress</label>
-                                    </div>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <div class="icheck-success d-inline text-success">
-                                        <input type="radio" form="statusForm" name="status" value="Done" id="Done">
-                                        <label for="Done">Done</label>
-                                    </div>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <div class="icheck-success d-inline text-danger">
-                                        <input type="radio" form="statusForm" name="status" value="Cancelled" id="Cancelled">
-                                        <label for="Cancelled">Cancelled</label>
-                                    </div>
-
+                                <div class="icheck-success d-inline text-info ">
+                                    <input type="radio" form="statusForm" name="status" value="Planned" checked
+                                        id="Planned">
+                                    <label for="Planned">Planned</label>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                <div class="icheck-success d-inline text-warning">
+                                    <input type="radio" form="statusForm" name="status" value="In Progress"
+                                        id="In_Progress">
+                                    <label for="In_Progress">In Progress</label>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                <div class="icheck-success d-inline text-success">
+                                    <input type="radio" form="statusForm" name="status" value="Done"
+                                        id="Done">
+                                    <label for="Done">Done</label>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                <div class="icheck-success d-inline text-danger">
+                                    <input type="radio" form="statusForm" name="status" value="Cancelled"
+                                        id="Cancelled">
+                                    <label for="Cancelled">Cancelled</label>
                                 </div>
 
-                                <div class="form-label-group in-border">
-                                    <textarea id="snote" name="snote" form="statusForm" style="text-transform:capitalize"
-                                    class="form-control text-center"
-                                        cols="60" rows="2"></textarea>
-                                    <label for="note">Note</label>
-                                </div>
+                            </div>
 
-                                <input type="text" id="rTaskID" hidden name="rTaskID">
+                            <div class="form-label-group in-border">
+                                <textarea id="snote" name="snote" form="statusForm" style="text-transform:capitalize"
+                                    class="form-control text-center" cols="60" rows="2"></textarea>
+                                <label for="note">Note</label>
+                            </div>
+
+                            <input type="text" id="rTaskID" hidden name="rTaskID">
 
                         </div>
 
@@ -472,6 +474,14 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('.select2').select2();
+        });
+
+        $(document).on('select2:open', (e) => {
+            const selectId = e.target.id;
+            $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(function(key,
+                value, ) {
+                value.focus();
+            });
         });
 
         function getTimeDiff(StartTime, EndTime) {
@@ -585,27 +595,25 @@
                     render: function(data, type, row) {
                         var status = row.status;
 
-                        if (status=='Planned') {
+                        if (status == 'Planned') {
                             var html = '';
                             html += '<div class="d-flex flex-column">';
                             html += '<div class="badge badge-info">' + status + '</div>';
                             html += '</div>';
                             return html;
-                        }else if (status=='In Progress')
-                        {
+                        } else if (status == 'In Progress') {
                             var html = '';
                             html += '<div class="d-flex flex-column">';
                             html += '<div class="badge badge-warning">' + status + '</div>';
                             html += '</div>';
                             return html;
-                        }else if (status=='Done')
-                        {
+                        } else if (status == 'Done') {
                             var html = '';
                             html += '<div class="d-flex flex-column">';
                             html += '<div class="badge badge-success">' + status + '</div>';
                             html += '</div>';
                             return html;
-                        }else{
+                        } else {
                             var html = '';
                             html += '<div class="d-flex flex-column">';
                             html += '<div class="badge badge-danger">' + status + '</div>';
@@ -631,11 +639,12 @@
                         var rowID = "'" + row.id + "'";
                         var title = "'" + row.title + "'";
                         var note = "'" + row.note + "'";
-                        var status ="'" + row.status + "'";
+                        var status = "'" + row.status + "'";
                         var html = '';
                         html += '<div class="d-flex justify-content-center">';
                         html +=
-                            '<button type="button" onclick="OpenStatusModel('+rowID+','+status+');" class="btn btn-sm btn-outline-success mr-1" ><i class="fa fa-retweet"></i></button>';
+                            '<button type="button" onclick="OpenStatusModel(' + rowID + ',' + status +
+                            ');" class="btn btn-sm btn-outline-success mr-1" ><i class="fa fa-retweet"></i></button>';
                         html += '<button type="button" onclick="edit_model(' + party_id + ',' + task_type +
                             ',' +
                             task_date + ',' + start_time + ',' + end_time + ',' + duration + ',' +
@@ -773,12 +782,12 @@
             } else {
                 $.ajax({
                     beforeSend: function() {
-                        $("#modelSpinner").addClass("spinner");
-                        $('#modelSpinner').show();
+                        $("#modelSpinner2").addClass("spinner");
+                        $('#modelSpinner2').show();
                     },
                     error: function(res) {
-                        $("#modelSpinner").removeClass("spinner");
-                        $('#modelSpinner').hide();
+                        $("#modelSpinner2").removeClass("spinner");
+                        $('#modelSpinner2').hide();
                         const ErrowArray = res.responseJSON['message'];
                         const EE = res.responseJSON['exception'];
                         const msgs = ErrowArray.split(':');
@@ -789,8 +798,8 @@
                         }
                     },
                     complete: function() {
-                        $("#modelSpinner").removeClass("spinner");
-                        $('#modelSpinner').hide();
+                        $("#modelSpinner2").removeClass("spinner");
+                        $('#modelSpinner2').hide();
                     },
                     type: 'POST',
                     url: "{{ route('TaskStatusUpdate') }}",
@@ -899,12 +908,12 @@
             document.getElementById('myform').reset();
         }
 
-        function OpenStatusModel(rID,Status) {
+        function OpenStatusModel(rID, Status) {
 
-            if (Status=='In Progress') {
+            if (Status == 'In Progress') {
                 $("#In_Progress").prop("checked", true);
             } else {
-                $("#"+Status).prop("checked", true);
+                $("#" + Status).prop("checked", true);
             }
             $('#rTaskID').val(rID);
 

@@ -20,7 +20,7 @@ use App\Http\Controllers\feedback\FeedbackController;
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->middleware('guest');
 
 Route::get('/lout', [HomeController::class, 'lout'])->name('lout');
 
@@ -47,6 +47,7 @@ Route::get('/migrate', function () {
 
     return 'Migrated';
 });
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
