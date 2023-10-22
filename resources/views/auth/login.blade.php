@@ -129,7 +129,7 @@
             margin: 0;
             line-height: 1em;
             font-family: Robofan Free;
-            src: url('{{ asset('/fonts/Robofan Free.otf') }}');
+            src: url('{{ asset('/fonts/Robofan.otf') }}');
             font-weight: bold;
             font-size: 30px;
             background: linear-gradient(to right, #1c87c9 10%, #2CBC77 50%);
@@ -148,21 +148,21 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-md-6">
+                <div class="col-md-6 d-none d-sm-block">
                     <div class="text-center mb-3">
-                        <img src="{{ url('/resources/images/appimages/galaxylogo.svg') }}" alt="Image" height="80" width="120" class="img-fluid">
+                        <img src="{{ asset('/resources/images/appimages/galaxylogo.svg') }}" alt="Image" height="80" width="120" class="img-fluid">
                     </div>
                     <div class="text-center">
                         <span class="sh1 mb-3">Task Management</span>
                     </div>
-                    <img src="{{ url('/resources/images/appimages/undraw_remotely_2j6y.svg') }}" alt="Image"
+                    <img src="{{ asset('/resources/images/appimages/undraw_remotely_2j6y.svg') }}" alt="Image"
                         class="img-fluid">
                 </div>
                 <div class="col-md-6 contents">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="mb-4">
-                                <span class="sh1">LOGIN</span>
+                                <span class="sh1">Login</span>
                                 <p class="mb-4">Enter Your Login Details</p>
                             </div>
 

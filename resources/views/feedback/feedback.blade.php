@@ -76,6 +76,7 @@
                                                 <option value="Cashback">Cashback</option>
                                                 <option value="Discount">Discount</option>
                                                 <option value="Markup">Markup</option>
+                                                <option value="Others">Others</option>
                                             </select>
                                             <label for="offer_category">Offer Category</label>
                                         </div>

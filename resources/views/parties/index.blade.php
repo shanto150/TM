@@ -63,6 +63,8 @@
                                                 <option value="NON-IATA">NON-IATA</option>
                                                 <option value="Legacy">Legacy</option>
                                                 <option value="LCC">LCC</option>
+                                                <option value="LOCAL">LOCAL</option>
+                                                <option value="INTERNATIONAL">INTERNATIONAL</option>
                                             </select>
                                             <label for="category">Category</label>
                                         </div>
